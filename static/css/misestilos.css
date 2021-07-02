@@ -1,1 +1,217 @@
+* {
+    margin: 0px;
+    padding: 0px;
+}
+a{
+    text-decoration: none;
+}
+#cuerpo{
+    background-image: linear-gradient(to bottom right, #020059, #386c7c);
+    width: 100%;
+}
+#cabeceralogo {
+    justify-content: center;
+    width: 100%;
+    margin: auto;
+    text-align: center;
+    height: 300px;
+    padding: 0% 2%;
+    background-repeat: no-repeat;
+    background-position-x: center;
+    background-position-y: center;
+    background-attachment: fixed;
+    background-size: cover;
+    text-shadow: 2px 2px 8px red;
+}
+#cabeceralogo > div {
+    flex: 1;
+    max-width: 960px;
+    padding-top: 45px;
+}
+#cabeceralogo h1 {
+    font: bold 54px Arial, sans-serif;
+    color: #FFFFFF;
+}
+#cabeceralogo h3 {
+    font: bold Arial, sans-serif;
+    color: #FFFFFF;
+}
+main {
+    justify-content: center;
+    padding: 1rem;
+    width: 98%;
+    border-right: 1px solid black ;
+    border-left: 1px solid black ;
+    border-top: 1px solid black ;
+    margin: -1rem auto auto auto;
+    background-color: white;
+}
+.titulos{
+    padding: 2px;
+    text-align: center;
+    margin-bottom: 0.5rem;
+}
+#ultimos{
+    margin-bottom: 0.5rem;
+}
+#ultimos > .carousel-inner > img{
+    width: 100%;
+    height: 200px;
+}
+#principal{
+    margin: auto;
+    text-align: justify;
+    padding: 1rem;
+}
+#imagen-muestra > table{
+    margin: auto;
+    width: 90%;
+}
+#detalles-juego{
+    width: 100%;
+}
 
+#catalogo{
+    float: left;
+    width: 60%;
+    border-radius: 15px;
+    margin: 10px;
+}
+#catalogo > .card{
+    margin: 0.5rem;
+    box-shadow: 3px 3px 8px #888888;
+}
+#catalogo > .card-img-top{
+    margin-top: 0.5rem;
+}
+#lateral{
+    float: right;
+    width: 35%;
+    padding: 0px;
+    border: 1px solid #e4e4e4;
+}
+#lateral > div{
+    width: 100%;
+    padding: 0.5rem;
+    text-align: center;
+    border-top: 1px solid #e4e4e4;
+}
+.btn-lat{
+    margin: 0.5rem;
+}
+#nosotros{
+    text-align: justify;
+    display: block;
+}
+#nosotros > button{
+    margin: auto;
+}
+#nosotros > img{
+    float: right;
+    margin: auto auto auto 1rem;
+}
+#pielogo {
+    display: flex;
+    justify-content: center;
+    border-top: 1px solid gray;
+    width: 100%;
+    padding: 1rem;
+    color: black;
+    background-color: white;
+}
+#pielogo > div {
+    display: flex;
+    flex: 1;
+    max-width: 960px;
+}
+.seccionpie {
+    flex: 1;
+    padding: 3%;
+}
+.seccionpie h1 {
+    font: bold 20px Arial, sans-serif;
+}
+.seccionpie p {
+    margin-top: 5px;
+}
+.seccionpie a {
+    font: bold 16px Arial, sans-serif;
+    color: #666666;
+    text-decoration: none;
+}
+#formulario{
+    float: left;
+    width: 50%;
+    padding: 0.5rem;
+    border-radius: 15px;
+    margin: 10px;
+}
+#tabla-registros{
+    float: right;
+    width: 45%;
+}
+.btn-completo{
+    width: 100%;
+}
+#tabla-login{
+    float: left;
+    width: 45%;
+    padding: 0.5rem;
+    border-radius: 15px;
+    margin: 10px;
+}
+#tabla-registro{
+    float: right;
+    width: 45%;
+    border-left: 1px solid;
+}
+.foto_perfil{
+    width: 10rem;
+    height: 10rem;
+    border: 1px solid black;
+    margin: auto;
+}
+@media (max-width: 720px) {
+    main > div {
+        display: block;
+    }
+    #formulario{
+        width: 100%;
+        margin-right: 0px;
+    }
+    #tabla-registros{
+        width: 100%;
+        margin-top: 20px;
+    }
+    #tabla-login{
+        width: 100%;
+        margin-right: 0px;
+    }
+    #tabla-registro{
+        width: 100%;
+        margin-top: 20px;
+        border-left: none;
+        border-top: 1px solid;
+    }
+    #catalogo{
+        width: 100%;
+        margin-right: 0px;
+    }
+    #lateral{
+        width: 100%;
+        margin-top: 20px;
+    }
+    #cabeceralogo > div {
+        text-align: center;
+    }
+    #cabeceralogo h1 {
+        font: bold 46px Arial, sans-serif;
+    }
+    #pielogo > div {
+        display: block;
+    }
+    .seccionpie {
+        width: 94%;
+        text-align: center;
+    }
+}
