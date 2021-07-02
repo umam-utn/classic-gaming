@@ -1,0 +1,43 @@
+{% extends 'administrador/layout-adm.html' %}
+
+{% block body %}
+    <main>
+        <!--Principal-->
+        <section id="principal" class="row">
+            {% with messages = get_flashed_messages()  %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-info alert-dismissible fade show" role="alert">
+                            <strong>{{ message }}</strong>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            <div  class="titulos"><h1>Administrar Idioma</h1></div>
+            {% for idioma in idiomas %}
+            <div id="formulario">
+                <div  class="titulos"><h4>Editar {{ idioma.1 }}</h4></div>
+                <form class="row g-3" id="forma" action="/update_idioma/{{ idioma.0 }}" method="POST">
+                    <div class="col-md-12">
+                      <label for="nombre-idioma" class="form-label">Nombre</label>
+                      <input type="text" class="form-control" id="nombre-idioma" name="nombre-idioma" required value="{{ idioma.1 }}">
+                    </div>
+                    <div class="col-12">
+                        <label for="desc-idioma" class="form-label">Descripción</label>
+                        <textarea class="form-control" id="desc-idioma" name="desc-idioma" rows="3" maxlength ="240">{{ idioma.2 }}</textarea>
+                    </div>
+                    <div class="col-12">
+                      <button type="submit" class="btn btn-primary btn-completo">Modificar</button>
+                    </div>
+                </form>
+            </div>
+            {% endfor %}
+            <div id="tabla-registros">
+                <div class="d-grid gap-2"><a href="/administrar_idiomas">
+                    <button class="btn btn-success btn-completo" type="button" id="btn-nuevo">+ Nuevo</button>
+                </a></div>
+            </div>
+        </section>
+    </main>
+{% endblock %}

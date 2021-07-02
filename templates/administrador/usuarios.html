@@ -1,0 +1,46 @@
+{% extends 'administrador/layout-adm.html' %}
+
+{% block body %}
+    <main>
+        <!--Principal-->
+        <section id="principal" class="row">
+            {% with messages = get_flashed_messages()  %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-info alert-dismissible fade show" role="alert">
+                            <strong>{{ message }}</strong>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            <div  class="titulos"><h1>Administrar Usuarios</h1></div>
+            <div>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Correo</th>
+                        <th scope="col">Teléfono</th>
+                        <th scope="col">Estado</th>
+                        <th scope="col">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for usuario in usuarios %}
+                        <tr>
+                            <th scope="row">{{ usuario.0 }}</th>
+                            <td>{{ usuario.1 }} {{ usuario.2 }}</td>
+                            <td>{{ usuario.3 }}</td>
+                            <td>{{ usuario.9 }}</td>
+                            <td>{{ usuario.6 }}</td>
+                            <td><a href="/privilegios_usu/{{ usuario.0 }}"><button type="button" class="btn btn-warning"><i class="bi bi-pencil-square"></i> Editar privilégios / Bloquear</button></a></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+{% endblock %}

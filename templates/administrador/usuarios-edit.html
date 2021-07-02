@@ -1,0 +1,47 @@
+{% extends 'administrador/layout-adm.html' %}
+
+{% block body %}    
+    <main>
+        <!--Principal-->
+        <section id="principal" class="row">
+            {% with messages = get_flashed_messages()  %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-info alert-dismissible fade show" role="alert">
+                            <strong>{{ message }}</strong>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            <div  class="titulos"><h1>Privilegios de la cuenta</h1></div>
+            {% for usuario in usuarios %}
+            <div id="perfil">
+                <img class="foto_perfil" src="/img/usuarios/{{ usuario.5 }}">
+                <form class="row g-3" action="/update_privilegios/{{ usuario.0 }}" method="POST" enctype="multipart/form-data">
+                    <div class="col-md-6">
+                        <label for="correo-usu" class="form-label">Correo</label>
+                        <input type="email" class="form-control" id="correo-usu" name="correo-usu" value="{{ usuario.3 }}" required readonly>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="nom-usu" class="form-label">Nombre Completo</label>
+                        <input type="text" class="form-control" id="nom-usu" name="nom-usu" value="{{ usuario.1 }} {{ usuario.2 }}" required readonly>
+                    </div>
+                    <div class="col-md-12">
+                        <label for="privilegios-usu" class="form-label">Privilegios</label>
+                        <select id="privilegios-usu" name="privilegios-usu" class="form-select" required>
+                          {% for rol in roles %}
+                            <option value="{{ rol.0 }}" {% if rol.0 == usuario.8 %} selected {% endif %}>{{ rol.1 }}: {{ rol.2 }}</option>
+                          {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary">Modificar</button>
+                    </div>
+                </form>
+            </div>
+            {% endfor %}
+            <img src="">
+        </section>
+    </main>
+{% endblock %}

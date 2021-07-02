@@ -1,0 +1,59 @@
+{% extends 'administrador/layout-adm.html' %}
+
+{% block body %}
+    <main>
+        <!--Principal-->
+        <section id="principal" class="row">
+            {% with messages = get_flashed_messages()  %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-info alert-dismissible fade show" role="alert">
+                            <strong>{{ message }}</strong>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            <div  class="titulos"><h1>Administrar Desarrolladoras</h1></div>
+            <div id="formulario">
+                <div  class="titulos"><h4>Agregar</h4></div>
+                <form class="row g-3" id="forma" action="/add_desarrolladora" method="POST">
+                    <div class="col-md-12">
+                      <label for="nombre-desarrolladora" class="form-label">Nombre</label>
+                      <input type="text" class="form-control" id="nombre-desarrolladora" name="nombre-desarrolladora" required>
+                    </div>
+                    <div class="col-12">
+                        <label for="desc-desarrolladora" class="form-label">Descripción</label>
+                        <textarea class="form-control" id="desc-desarrolladora" name="desc-desarrolladora" rows="3" maxlength ="240"></textarea>
+                    </div>
+                    <div class="col-12">
+                      <button type="submit" class="btn btn-primary btn-completo">Agregar</button>
+                    </div>
+                </form>
+            </div>
+            <div id="tabla-registros">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Descripción</th>
+                        <th scope="col" colspan="2">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for desarrolladora in desarrolladoras %}
+                        <tr>
+                            <th scope="row">{{ desarrolladora.0 }}</th>
+                            <td>{{ desarrolladora.1 }}</td>
+                            <td>{{ desarrolladora.2 }}</td>
+                            <td><a href="/edit_desarrolladora/{{ desarrolladora.0 }}"><button type="button" class="btn btn-warning"><i class="bi bi-pencil-square"></i></button></td>
+                            <td><button type="button" class="btn btn-danger" onclick="eliminaDesarrolladora('{{ desarrolladora.0 }}', '{{ desarrolladora.1 }}');" ><i class="bi bi-trash"></i></button></a></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+{% endblock %}
