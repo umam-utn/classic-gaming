@@ -1,0 +1,68 @@
+{% extends 'usuarios/layout-usr.html' %}
+
+{% block body %}    
+    <main>
+        <!--Principal-->
+        <section id="principal" class="row">
+            {% with messages = get_flashed_messages()  %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-info alert-dismissible fade show" role="alert">
+                            <strong>{{ message }}</strong>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            <div  class="titulos"><h1>Configuración de la cuenta</h1></div>
+            {% for usuario in usuarios %}
+            <div id="perfil">
+                <img class="foto_perfil" src="/img/usuarios/{{ usuario.5 }}">
+                <form class="row g-3" action="/update_perfil/{{ usuario.0 }}" method="POST" enctype="multipart/form-data">
+                    <div class="col-md-6">
+                        <label for="avatar-usu" class="form-label">Avatar</label>
+                        <input class="form-control" type="file" id="avatar-usu" name="avatar-usu">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="correo-usu" class="form-label">Correo</label>
+                        <input type="email" class="form-control" id="correo-usu" name="correo-usu" value="{{ usuario.3 }}" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="nom-usu" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="nom-usu" name="nom-usu" value="{{ usuario.1 }}" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="ap-usu" class="form-label">Apellido</label>
+                        <input type="text" class="form-control" id="ap-usu" name="ap-usu" value="{{ usuario.2 }}" required>
+                    </div>
+                    <div class="col-6">
+                        <label for="contra-usu" class="form-label">Cambiar Contraseña</label>
+                        <input type="password" class="form-control" id="contra-usu" name="contra-usu">
+                    </div>
+                    <div class="col-6">
+                        <label for="contra-r-usu" class="form-label">Repetir Contraseña</label>
+                        <input type="password" class="form-control" id="contra-r-usu" name="contra-r-usu">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="estado-usu" class="form-label">Estado/Ciudad</label>
+                        <input type="text" class="form-control" id="estado-usu" name="estado-usu" value="{{ usuario.6 }}" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="tel-usu" class="form-label">Teléfono</label>
+                        <input type="tel" class="form-control" id="tel-usu" name="tel-usu" value="{{ usuario.9 }}" required>
+                    </div>
+                    <div class="col-12">
+                            <label for="conf-contra-ori" class="form-label">Para validar los cambios ingrese su contraseña actual.</label>
+                            <input type="password" class="form-control" id="conf-contra-ori" name="conf-contra-ori" required>
+                            <input type="hidden" class="form-control" id="contra-ori" name="contra-ori" value="{{ usuario.4 }}" required>
+                    </div>
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary">Modificar</button>
+                    </div>
+                </form>
+            </div>
+            {% endfor %}
+            <img src="">
+        </section>
+    </main>
+{% endblock %}

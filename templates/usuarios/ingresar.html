@@ -1,0 +1,79 @@
+{% extends 'usuarios/layout-usr.html' %}
+
+{% block body %} 
+    <main>
+        <!--Principal-->
+        <section id="principal" class="row">
+            {% with messages = get_flashed_messages()  %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-info alert-dismissible fade show" role="alert">
+                            <strong>{{ message }}</strong>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            <div id="tabla-login">
+                <div  class="titulos"><h4>Iniciar Sesión</h4></div>
+                <form class="row g-3" action="/ingresar" method="POST">
+                    <div class="col-md-12 input-group flex-nowrap">
+                        <span class="input-group-text" id="addon-wrapping">@</span>
+                        <input type="text" class="form-control" placeholder="Correo" aria-label="Username" aria-describedby="addon-wrapping" id="correo-usu" name="correo-usu">
+                    </div>
+                    <div class="col-12 input-group flex-nowrap">
+                        <span class="input-group-text" id="addon-wrapping"><i class="bi bi-eye-fill"></i></span>
+                        <input type="password" class="form-control" placeholder="Contraseña" aria-label="Username" aria-describedby="addon-wrapping" id="contra-usu" name="contra-usu">
+                    </div>
+                    <div class="col-12">
+                      <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+                    </div>
+                </form>
+            </div>
+            <div id="tabla-registro">
+                <form class="row g-3" action="/registro" method="POST">
+                    <div  class="titulos"><h4>Registrarme</h4></div>
+                    <div class="col-md-12">
+                        <label for="correo-usu" class="form-label">Correo</label>
+                        <input type="email" class="form-control" id="correo-usu" name="correo-usu" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="nom-usu" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="nom-usu" name="nom-usu" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="ap-usu" class="form-label">Apellido</label>
+                        <input type="text" class="form-control" id="ap-usu" name="ap-usu" required>
+                    </div>
+                    <div class="col-6">
+                        <label for="contra-usu" class="form-label">Contraseña</label>
+                        <input type="password" class="form-control" id="contra-usu" name="contra-usu" required>
+                    </div>
+                    <div class="col-6">
+                        <label for="contra-r-usu" class="form-label">Repetir Contraseña</label>
+                        <input type="password" class="form-control" id="contra-r-usu" name="contra-r-usu" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="estado-usu" class="form-label">Estado/Ciudad</label>
+                        <input type="text" class="form-control" id="estado-usu" name="estado-usu" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="tel-usu" class="form-label">Teléfono</label>
+                        <input type="tel" class="form-control" id="tel-usu" name="tel-usu" required>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="terminos-usus" required>
+                        <label class="form-check-label" for="terminos-usus">
+                            He leído y acepto <a href="/terminos_condiciones">términos y condiciones de uso</a> y la <a href="/terminos_condiciones">Política de privacidad</a>
+                        </label>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary">Registrarme</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+{% endblock %}

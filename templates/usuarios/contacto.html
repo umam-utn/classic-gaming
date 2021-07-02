@@ -1,0 +1,30 @@
+{% extends 'usuarios/layout-usr.html' %}
+
+{% block body %} 
+    <main>
+        <!--Principal-->
+        <section id="principal">
+            <div  class="titulos"><h1>Contacto / Solicitud</h1></div>
+            <p>En este apartado podras contactar con nosotros o realizar la solicitud de algún juego en particular. Deja tu mensaje y te contactaremos.</p>
+            <form>
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Nombre</label>
+                    <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Solid Snake">
+                </div>
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Correo Electrónico</label>
+                    <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+                </div>
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Asunto</label>
+                    <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Petición, Solicitud, etc.">
+                </div>
+                <div class="mb-3">
+                    <label for="exampleFormControlTextarea1" class="form-label">Mensaje</label>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Enviar</button>
+            </form>
+        </section>
+    </main>
+{% endblock %}

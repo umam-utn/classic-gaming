@@ -1,0 +1,91 @@
+{% extends 'usuarios/layout-usr.html' %}
+
+{% block body %} 
+    <main>
+        <!--Principal-->
+        <section id="principal" class="row">
+            <div id="catalogo">
+                {% for juego in juegos %}
+                    <div  class="titulos"><h1>{{ juego.1 }}</h1></div>
+                    <div id="imagen-muestra">
+                        <table>
+                            <tr>
+                                <td style="width: 50%;">
+                                    <figure class="figure">
+                                        <img src="/img/juegos/{{ juego.2 }}" class="figure-img img-fluid rounded" style="width: 100%;" alt="...">
+                                    </figure>
+                                </td>
+                                <td style="width: 50%;">
+                                    <figure class="figure">
+                                        <img src="/img/juegos/{{ juego.3 }}" class="figure-img img-fluid rounded" style="width: 100%;" alt="...">
+                                    </figure>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div id="detalles-juego">
+                        <p><b>Precio: </b>${{ juego.6 }} MX</p>
+                        <p><b>Lanzamiento: </b>{{ juego.5 }}</p>
+                        <p><b>Idioma: </b>{{ juego.8 }}</p>
+                        <p><b>Región: </b>{{ juego.10 }}</p>
+                        <p><b>Desarrolladora:</b> {{ juego.9 }}</p>
+                        <p><b>Detalles:</b> {{ juego.4 }}</p>
+                        <table class="table table-striped">
+                            <tr>
+                                <td>
+                                    Condición:<br>
+                                    <b>Usado</b>
+                                </td>
+                                <td>
+                                    Plataforma:<br>
+                                    <b>{{ juego.7 }}</b>
+                                </td>
+                            </tr>
+                        </table>
+                        <br><button type="button" class="btn btn-primary btn-completo"><i class="bi bi-cart-plus"></i> Agregar a Carrito</button>
+                        <br><br><button type="button" class="btn btn-success btn-completo"><i class="bi bi-credit-card-fill"></i> Comprar ${{ juego.6 }}</button><br>
+                    </div>
+                    <div  class="titulos"><h1>¿Buscas algo mas?</h1></div>
+                    <div><p>Si no encuentras alguno en particular, puedes preguntar y haremos lo posible por conseguirlo. De igual forma si deseas tener mas detalles del producto puedes enviar un mensaje.</p></div>
+                    <div class="d-grid gap-2 col-12 mx-auto">
+                        <a href="/contacto"><button class="btn btn-primary btn-completo" type="button">Contacto / Solicitud</button></a>
+                    </div>
+                {% endfor %}
+            </div>
+            <aside id="lateral">
+                <nav class="navbar navbar-dark bg-primary">
+                    <div class="container-fluid">
+                        <form class="d-flex" action="/resultados" method="POST">
+                            <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search" id="busqueda" name="busqueda">
+                            <button class="btn btn-light" type="submit"><i class="bi bi-search"></i></button>
+                        </form>
+                    </div>
+                </nav>
+                <div>
+                    <h4>Consolas</h4><br>
+                    {% for consola in consolas %}
+                        <a href="/resultados/consolas/{{ consola.0 }}"><button type="button" class="btn btn-secondary btn-lat">{{ consola.1 }}</button></a>
+                    {% endfor %}
+                </div>
+                <div>
+                    <h4>Géneros</h4><br>
+                    {% for genero in generos %}
+                        <a href="/resultados/generos/{{ genero.0 }}"><button type="button" class="btn btn-secondary btn-lat">{{ genero.1 }}</button></a>
+                    {% endfor %}
+                </div>
+                <div>
+                    <h4>Idiomas</h4><br>
+                    {% for idioma in idiomas %}
+                        <a href="/resultados/idiomas/{{ idioma.0 }}"><button type="button" class="btn btn-secondary btn-lat">{{ idioma.1 }}</button></a>
+                    {% endfor %}
+                </div>
+                <div>
+                    <h4>Desarrolladoras</h4><br>
+                    {% for desarrolladora in desarrolladoras %}
+                        <a href="/resultados/desarrolladoras/{{ desarrolladora.0 }}"><button type="button" class="btn btn-secondary btn-lat">{{ desarrolladora.1 }}</button></a>
+                    {% endfor %}
+                </div>
+            </aside>
+        </section>
+    </main>
+{% endblock %}
