@@ -19,11 +19,14 @@
                 <form class="row g-3" action="/ingresar" method="POST">
                     <div class="col-md-12 input-group flex-nowrap">
                         <span class="input-group-text" id="addon-wrapping">@</span>
-                        <input type="text" class="form-control" placeholder="Correo" aria-label="Username" aria-describedby="addon-wrapping" id="correo-usu" name="correo-usu">
+                        <input type="email" class="form-control" placeholder="Correo" aria-label="Username" aria-describedby="addon-wrapping" id="correo-usu" name="correo-usu" minlength="12" maxlength="40">
                     </div>
                     <div class="col-12 input-group flex-nowrap">
                         <span class="input-group-text" id="addon-wrapping"><i class="bi bi-eye-fill"></i></span>
-                        <input type="password" class="form-control" placeholder="Contraseña" aria-label="Username" aria-describedby="addon-wrapping" id="contra-usu" name="contra-usu">
+                        <input type="password" class="form-control" placeholder="Contraseña" aria-label="Username" aria-describedby="addon-wrapping" id="contra-usu-login" name="contra-usu-login" minlength="8" maxlength="15" pattern="^[a-zA-ZñÑ0-9._-]+$">
+                    </div>
+                    <div class="col-12 input-group">
+                        <a href="#" onclick="return mostrarContrasena()">Mostrar/Ocultar contraseña</a>
                     </div>
                     <div class="col-12">
                       <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
@@ -31,35 +34,38 @@
                 </form>
             </div>
             <div id="tabla-registro">
-                <form class="row g-3" action="/registro" method="POST">
+                <form class="row g-3" action="/registro" method="POST" onsubmit="return validaContrasenas()">
                     <div  class="titulos"><h4>Registrarme</h4></div>
                     <div class="col-md-12">
                         <label for="correo-usu" class="form-label">Correo</label>
-                        <input type="email" class="form-control" id="correo-usu" name="correo-usu" required>
+                        <input type="email" class="form-control" id="correo-usu" name="correo-usu" required minlength="12" maxlength="40" placeholder="micorreo@mail.com">
                     </div>
                     <div class="col-md-6">
                         <label for="nom-usu" class="form-label">Nombre</label>
-                        <input type="text" class="form-control" id="nom-usu" name="nom-usu" required>
+                        <input type="text" class="form-control" id="nom-usu" name="nom-usu" required minlength="3" maxlength="25" placeholder="Leon" pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ.\s]+">
                     </div>
                     <div class="col-md-6">
                         <label for="ap-usu" class="form-label">Apellido</label>
-                        <input type="text" class="form-control" id="ap-usu" name="ap-usu" required>
+                        <input type="text" class="form-control" id="ap-usu" name="ap-usu" required minlength="3" maxlength="25" placeholder="S. Kennedy" pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ.\s]+">
                     </div>
                     <div class="col-6">
                         <label for="contra-usu" class="form-label">Contraseña</label>
-                        <input type="password" class="form-control" id="contra-usu" name="contra-usu" required>
+                        <input type="password" class="form-control" id="contra-usu" name="contra-usu" required  minlength="8" maxlength="15" pattern="^[a-zA-ZñÑ0-9._-]+$" placeholder="Letras, números y guiones máximo 15 caracteres">
                     </div>
                     <div class="col-6">
                         <label for="contra-r-usu" class="form-label">Repetir Contraseña</label>
-                        <input type="password" class="form-control" id="contra-r-usu" name="contra-r-usu" required>
+                        <input type="password" class="form-control" id="contra-r-usu" name="contra-r-usu" required  minlength="8" maxlength="15" pattern="^[a-zA-ZñÑ0-9._-]+$" placeholder="Letras, números y guiones máximo 15 caracteres">
+                    </div>
+                    <div class="col-12">
+                        <a href="#" onclick="return mostrarContrasenas()">Mostrar/Ocultar contraseñas</a>
                     </div>
                     <div class="col-md-6">
                         <label for="estado-usu" class="form-label">Estado/Ciudad</label>
-                        <input type="text" class="form-control" id="estado-usu" name="estado-usu" required>
+                        <input type="text" class="form-control" id="estado-usu" name="estado-usu" required minlength="3" maxlength="25" placeholder="México, Queretaro, Puebla, etc." pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ.\s]+">
                     </div>
                     <div class="col-md-6">
                         <label for="tel-usu" class="form-label">Teléfono</label>
-                        <input type="tel" class="form-control" id="tel-usu" name="tel-usu" required>
+                        <input type="tel" class="form-control" id="tel-usu" name="tel-usu" required minlength="8" maxlength="12" placeholder="55000000" pattern="[0-9]+">
                     </div>
                     <div class="col-12">
                         <div class="form-check">

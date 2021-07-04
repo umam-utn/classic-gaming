@@ -14,10 +14,11 @@
     <title>Classic-Gaming</title>
 </head>
 <body id="cuerpo">
+    <div class="alert alert-danger" role="alert">Estimado usuario, el sitio actualmente se encuentra en construcción por lo que varias funciones no se encuentran operativas, agradecemos su comprensión.</div>
     <!--Barra principal-->
     <nav class="navbar-expand-lg navbar navbar-dark bg-primary">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/">
+            <a class="navbar-brand" {% if session['rol'] == 'adm' %} href="/administrador" {% else %} href="/" {% endif %}>
                 <img src="/img/logo.png" alt="" width="30" height="30">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -30,15 +31,19 @@
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="bi bi-person-circle"></i> Cuenta
+                        <i class="bi bi-person-circle"></i> {% if session['correo'] %} {{ session['correo'] }} {% else %} Cuenta {% endif %}
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="/login">Iniciar Sesión o Registrarse</a></li>
                         {% if session['correo'] %}
                         <li><hr class="dropdown-divider"></li>
+                        {% if session['rol'] == 'adm' %}
+                        {% else %}
                         <li><a class="dropdown-item" href="/perfil"><i class="bi bi-gear"></i> Configuración</a></li>
                         <li><hr class="dropdown-divider"></li>
+                        {% endif %}
                         <li><a class="dropdown-item" href="/salir"><i class="bi bi-box-arrow-right"></i> Salir</a></li>
+                        {% else %}
+                        <li><a class="dropdown-item" href="/login">Iniciar Sesión o Registrarse</a></li>
                         {% endif %}
                     </ul>
                 </li>
@@ -83,6 +88,7 @@
         </div>
     </footer>
     <!--JS-->
+    <script src="{{url_for('static', filename='js/general.js')}}"></script>
     <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
 </body>

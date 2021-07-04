@@ -42,7 +42,6 @@
                                 </td>
                             </tr>
                         </table>
-                        <br><button type="button" class="btn btn-primary btn-completo"><i class="bi bi-cart-plus"></i> Agregar a Carrito</button>
                         <br><br><button type="button" class="btn btn-success btn-completo"><i class="bi bi-credit-card-fill"></i> Comprar ${{ juego.6 }}</button><br>
                     </div>
                     <div  class="titulos"><h1>¿Buscas algo mas?</h1></div>
@@ -56,11 +55,15 @@
                 <nav class="navbar navbar-dark bg-primary">
                     <div class="container-fluid">
                         <form class="d-flex" action="/resultados" method="POST">
-                            <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search" id="busqueda" name="busqueda">
+                            <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search" id="busqueda" name="busqueda" minlength="1" maxlength="26">
                             <button class="btn btn-light" type="submit"><i class="bi bi-search"></i></button>
                         </form>
                     </div>
                 </nav>
+                <div>
+                    <img src="/img/anuncio.jpg">
+                    <p>Las opciones de compra, carrito y contacto se encuentran en construcción por lo que no estan activas.</p>
+                </div>
                 <div>
                     <h4>Consolas</h4><br>
                     {% for consola in consolas %}
