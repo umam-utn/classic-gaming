@@ -52,6 +52,12 @@ def consultaSelect(consulta):
     cur.close() #Cerrar conexión BD
     return resultados #Retornamos resultado
 
+def consultaDelete(consulta):
+    cur = mysql.connection.cursor() #Iniciar conexión BD
+    cur.execute(consulta) #Consulta
+    mysql.connection.commit() #Confirmar operación
+    cur.close() #Cerrar conexión BD
+
 def sentenciaBD(sql,datos):
     cur = mysql.connection.cursor() #Iniciar conexión BD
     cur.execute(sql,datos) #Realizamos operación
@@ -114,11 +120,15 @@ def index():
         FROM juegos j, consolas c, idiomas i, desarrolladoras d
         WHERE j.id_consola = c.id_consola AND j.id_idioma = i.id_idioma AND j.id_desarrolladora = d.id_desarrolladora'''
     juegos = consultaSelect(sql)
+    sql = '''SELECT j.id_juego, j.nombre, j.foto, j.precio, c.nombre_cons
+        FROM juegos j, consolas c
+        WHERE j.id_consola = c.id_consola ORDER BY id_juego DESC LIMIT 3'''
+    ultimos = consultaSelect(sql)
     generos = consultaGeneros()
     consolas = consultaConsolas()
     desarrolladoras = consultaDesarrolladoras()
     idiomas = consultaIdiomas()
-    return render_template('usuarios/index.html', juegos = juegos, generos = generos, consolas = consolas, desarrolladoras = desarrolladoras, idiomas = idiomas)
+    return render_template('usuarios/index.html', juegos = juegos, ultimos = ultimos,generos = generos, consolas = consolas, desarrolladoras = desarrolladoras, idiomas = idiomas)
 
 #Detalles juego
 @app.route('/detalles_juego/<int:id>', methods = ['POST','GET'])
@@ -229,7 +239,7 @@ def ingresar():
     if request.method == "POST":
         #Recibimos datos del formulario
         correo = request.form['correo-usu']
-        contra = request.form['contra-usu']
+        contra = request.form['contra-usu-login']
         sqlValida ='SELECT COUNT(id_usuario) FROM usuarios WHERE correo = "'+correo+'";'
         existe = consultaSelect(sqlValida)
         if existe[0][0] < 1: #Si no encontro otro registro igual
@@ -388,9 +398,8 @@ def delete_genero(id):
     sqlValida = 'SELECT COUNT(id_genero) FROM juegos WHERE id_genero = {0};'.format(id)
     existe = consultaSelect(sqlValida)
     if existe[0][0] < 1: #Si no encontro registros en juegos
-        sql = 'DELETE FROM generos WHERE id_genero = %s;'
-        datos = (format(id))
-        sentenciaBD(sql,datos)
+        sql = 'DELETE FROM generos WHERE id_genero = {0};'.format(id)
+        consultaDelete(sql)
         flash('Género borrado de manera correcta.') #Mensaje de confirmación
     if existe[0][0] > 0: # Si encontro registros en la tabla juegos
         flash('El Género no se puede borrar debido a que está asignado a uno o más juegos.') #Mensaje de Error
@@ -428,6 +437,20 @@ def update_genero(id):
             flash('El Género no se actualizó debido a que ya se encuentra registrado otro con el mismo nombre.') #Mensaje de error
     return redirect(url_for('generos')) #Redirecciona a la página géneros
 
+#Busqueda Géneros
+@app.route("/busqueda_generos", methods=['POST'])
+def busqueda_generos():
+    if 'rol' in session:
+        if session['rol'] == 'adm':
+            datos = request.form['busqueda']
+            sql = "SELECT * FROM generos WHERE nombre_gen LIKE '%"+datos+"%';"
+            generos  = consultaSelect(sql)
+            return render_template('administrador/generos.html', generos = generos)
+        else:
+            return redirect(url_for('index'))
+    else:
+        return redirect(url_for('index'))
+
 #Catalogo Consolas
 @app.route("/administrar_consolas")
 def consolas():
@@ -460,15 +483,14 @@ def add_consola():
     return redirect(url_for('consolas')) #Redirecciona a la página consolas
 
 #Elimina Consola
-@app.route("/delete_consola/<int:id>", methods = ['POST','GET'])
+@app.route("/delete_consola/<id>", methods = ['POST','GET'])
 def delete_consola(id):
     #Validamos si existen registros en Juegos
     sqlValida = 'SELECT COUNT(id_consola) FROM juegos WHERE id_consola = {0};'.format(id)
     existe = consultaSelect(sqlValida)
     if existe[0][0] < 1: #Si no encontro registros en Juegos
-        sql = 'DELETE FROM consolas WHERE id_consola = %s;'
-        datos = (format(id))
-        sentenciaBD(sql,datos)
+        sql = 'DELETE FROM consolas WHERE id_consola = {0};'.format(id)
+        consultaDelete(sql)
         flash('Consola borrada de manera correcta.') #Mensaje de confirmación
     if existe[0][0] > 0: # Si encontro registros en la tabla Juegos
         flash('La consola no se puede borrar debido a que está asignada a uno o más juegos.') #Mensaje de Error
@@ -506,6 +528,20 @@ def update_consola(id):
             flash('La consola no se actualizó debido a que ya se encuentra registrada otra con el mismo nombre.') #Mensaje de error
     return redirect(url_for('consolas')) #Redirecciona a la página consolas
 
+#Busqueda Consolas
+@app.route("/busqueda_consolas", methods=['POST'])
+def busqueda_consolas():
+    if 'rol' in session:
+        if session['rol'] == 'adm':
+            datos = request.form['busqueda']
+            sql = "SELECT * FROM consolas WHERE nombre_cons LIKE '%"+datos+"%';"
+            consolas = consultaSelect(sql)
+            return render_template('administrador/consolas.html', consolas = consolas)
+        else:
+            return redirect(url_for('index'))
+    else:
+        return redirect(url_for('index'))
+
 #Catalogo Desarrolladoras
 @app.route("/administrar_desarrolladoras")
 def desarrolladoras():
@@ -538,15 +574,14 @@ def add_desarrolladora():
     return redirect(url_for('desarrolladoras')) #Redirecciona a la página desarrolladoras
 
 #Elimina Desarrolladora
-@app.route("/delete_desarrolladora/<int:id>", methods = ['POST','GET'])
+@app.route("/delete_desarrolladora/<id>", methods = ['POST','GET'])
 def delete_desarrolladora(id):
     #Validamos si existen registros en Juegos
     sqlValida = 'SELECT COUNT(id_desarrolladora) FROM juegos WHERE id_desarrolladora = {0};'.format(id)
     existe = consultaSelect(sqlValida)
     if existe[0][0] < 1: #Si no encontro registros en Juegos
-        sql = 'DELETE FROM desarrolladoras WHERE id_desarrolladora = %s;'
-        datos = (format(id))
-        sentenciaBD(sql,datos)
+        sql = 'DELETE FROM desarrolladoras WHERE id_desarrolladora = {0};'.format(id)
+        consultaDelete(sql)
         flash('Desarrolladora borrada de manera correcta.') #Mensaje de confirmación
     if existe[0][0] > 0: # Si encontro registros en la tabla Juegos
         flash('La desarrolladora no se puede borrar debido a que está asignada a uno o más juegos.') #Mensaje de Error
@@ -582,7 +617,21 @@ def update_desarrolladora(id):
             flash('Desarrolladora actualizada.') #Mensaje de Confirmación
         if existe[0][0] > 0: # Si encontro otro registro igual
             flash('La desarrolladora no se actualizó debido a que ya se encuentra registrada otra con el mismo nombre.') #Mensaje de error
-    return redirect(url_for('desarrolladoras')) #Redirecciona a la página consolas
+    return redirect(url_for('desarrolladoras')) #Redirecciona a la página desarrolladoras
+
+#Busqueda Desarrolladoras
+@app.route("/busqueda_desarrolladoras", methods=['POST'])
+def busqueda_desarrolladoras():
+    if 'rol' in session:
+        if session['rol'] == 'adm':
+            datos = request.form['busqueda']
+            sql = "SELECT * FROM desarrolladoras WHERE nombre_desa LIKE '%"+datos+"%';"
+            desarrolladoras = consultaSelect(sql)
+            return render_template('administrador/desarrolladoras.html', desarrolladoras = desarrolladoras)
+        else:
+            return redirect(url_for('index'))
+    else:
+        return redirect(url_for('index'))
 
 #Catalogo Idiomas
 @app.route("/administrar_idiomas")
@@ -622,9 +671,8 @@ def delete_idioma(id):
     sqlValida = 'SELECT COUNT(id_idioma) FROM juegos WHERE id_idioma = {0};'.format(id)
     existe = consultaSelect(sqlValida)
     if existe[0][0] < 1: #Si no encontro registros en juegos
-        sql = 'DELETE FROM idiomas WHERE id_idioma = %s;'
-        datos = (format(id))
-        sentenciaBD(sql,datos)
+        sql = 'DELETE FROM idiomas WHERE id_idioma = {0};'.format(id)
+        consultaDelete(sql)
         flash('Idioma borrado de manera correcta.') #Mensaje de confirmación
     if existe[0][0] > 0: # Si encontro registros en la tabla detalles
         flash('El idioma no se puede borrar debido a que está asignado a uno o más juegos.') #Mensaje de Error
@@ -661,6 +709,20 @@ def update_idioma(id):
         if existe[0][0] > 0: # Si encontro otro registro igual
             flash('El idioma no se actualizó debido a que ya se encuentra registrado otro con el mismo nombre.') #Mensaje de error
     return redirect(url_for('idiomas')) #Redirecciona a la página consolas
+
+#Busqueda Idiomas
+@app.route("/busqueda_idiomas", methods=['POST'])
+def busqueda_idiomas():
+    if 'rol' in session:
+        if session['rol'] == 'adm':
+            datos = request.form['busqueda']
+            sql = "SELECT * FROM idiomas WHERE nombre_idioma LIKE '%"+datos+"%';"
+            idiomas = consultaSelect(sql)
+            return render_template('administrador/idiomas.html', idiomas = idiomas)
+        else:
+            return redirect(url_for('index'))
+    else:
+        return redirect(url_for('index'))
 
 #Catalogo Juegos
 @app.route("/administrar_juegos")
@@ -747,9 +809,8 @@ def delete_juego(id):
     foto1 = data[0][0]
     foto2 = data[0][1]
     #Realizamos el borrado
-    sql = 'DELETE FROM juegos WHERE id_juego = %s;'
-    datos = (format(id))
-    sentenciaBD(sql,datos)
+    sql = 'DELETE FROM juegos WHERE id_juego = {0};'.format(id)
+    consultaDelete(sql)
     #Removemos imagenes del servidor
     os.remove("./img/juegos/{}".format(foto1)) #Borra foto 1 del servidor
     os.remove("./img/juegos/{}".format(foto2)) #Borra foto 2 del servidor
@@ -842,6 +903,27 @@ def update_juego(id):
             flash('El Juego no se actualizó debido a que ya se encuentra registrado otro con el mismo nombre.') #Mensaje de error
     return redirect(url_for('juegos')) #Redirecciona a la página consolas
 
+#Busqueda Juegos
+@app.route("/busqueda_juegos", methods=['POST'])
+def busqueda_juegos():
+    if 'rol' in session:
+        if session['rol'] == 'adm':
+            datos = request.form['busqueda']
+            sql = '''SELECT j.id_juego, j.nombre, j.descripcion, c.nombre_cons 
+                FROM juegos j, consolas c
+                WHERE j.id_consola = c.id_consola AND j.nombre LIKE "%'''+datos+'''%"'''
+            juegos = consultaSelect(sql)
+            generos = consultaGeneros()
+            consolas = consultaConsolas()
+            desarrolladoras = consultaDesarrolladoras()
+            regiones = consultaRegiones()
+            idiomas = consultaIdiomas()
+            return render_template('administrador/juegos.html', juegos = juegos, generos = generos, consolas = consolas, desarrolladoras = desarrolladoras, regiones = regiones, idiomas = idiomas)
+        else:
+            return redirect(url_for('index'))
+    else:
+        return redirect(url_for('index'))
+
 #Administra usuarios
 @app.route('/administra_usuarios')
 def administra_usuarios():
@@ -882,6 +964,24 @@ def update_privilegios(id):
         sentenciaBD(sql,datos)
         flash('Privilegios de '+usu+' actualizados.') #Mensaje de Confirmación
         return redirect(url_for('administra_usuarios'))
+
+#Busqueda usuarios
+@app.route('/busqueda_usuarios', methods=['POST'])
+def busqueda_usuarios():
+    if 'rol' in session:
+        if session['rol'] == 'adm':
+            datos = request.form['busqueda']
+            sql = "SELECT * FROM usuarios WHERE id_usuario != 1 AND nombre_usu LIKE '%"+datos+"%';"
+            usuarios = consultaSelect(sql)
+            return render_template('administrador/usuarios.html', usuarios = usuarios)
+        else:
+            return redirect(url_for('index'))
+    else:
+        return redirect(url_for('index'))
+
+@app.errorhandler(404)
+def page_not_found(error):
+    return render_template('usuarios/404.html')
 
 if __name__ == "__main__":
     app.run(debug=True)
