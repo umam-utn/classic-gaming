@@ -35,7 +35,6 @@
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         {% if session['correo'] %}
-                        <li><hr class="dropdown-divider"></li>
                         {% if session['rol'] == 'adm' %}
                         {% else %}
                         <li><a class="dropdown-item" href="/perfil"><i class="bi bi-gear"></i> Configuración</a></li>
