@@ -18,10 +18,10 @@
             {% for usuario in usuarios %}
             <div id="perfil">
                 <img class="foto_perfil" src="/img/usuarios/{{ usuario.5 }}">
-                <form class="row g-3" action="/update_perfil/{{ usuario.0 }}" method="POST" enctype="multipart/form-data">
+                <form class="row g-3" action="/update_perfil/{{ usuario.0 }}" method="POST" enctype="multipart/form-data" onsubmit="return validaPerfil()">
                     <div class="col-md-6">
                         <label for="avatar-usu" class="form-label">Avatar</label>
-                        <input class="form-control" type="file" id="avatar-usu" name="avatar-usu">
+                        <input class="form-control" type="file" id="avatar-usu" name="avatar-usu" accept="image/png, .jpeg, .jpg">
                     </div>
                     <div class="col-md-6">
                         <label for="correo-usu" class="form-label">Correo</label>
@@ -29,31 +29,34 @@
                     </div>
                     <div class="col-md-6">
                         <label for="nom-usu" class="form-label">Nombre</label>
-                        <input type="text" class="form-control" id="nom-usu" name="nom-usu" value="{{ usuario.1 }}" required>
+                        <input type="text" class="form-control" id="nom-usu" name="nom-usu" value="{{ usuario.1 }}" required placeholder="John" minlength='3' maxlength='25' pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ.\s]+">
                     </div>
                     <div class="col-md-6">
                         <label for="ap-usu" class="form-label">Apellido</label>
-                        <input type="text" class="form-control" id="ap-usu" name="ap-usu" value="{{ usuario.2 }}" required>
+                        <input type="text" class="form-control" id="ap-usu" name="ap-usu" value="{{ usuario.2 }}" required placeholder="Doe" minlength='3' maxlength='25' pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ.\s]+">
                     </div>
                     <div class="col-6">
                         <label for="contra-usu" class="form-label">Cambiar Contraseña</label>
-                        <input type="password" class="form-control" id="contra-usu" name="contra-usu">
+                        <input type="password" class="form-control" id="contra-usu" name="contra-usu" minlength='8' maxlength='15' pattern="^[a-zA-ZñÑ0-9._-]+$" placeholder="Letras, números y guiones máximo 15 caracteres">
                     </div>
                     <div class="col-6">
                         <label for="contra-r-usu" class="form-label">Repetir Contraseña</label>
-                        <input type="password" class="form-control" id="contra-r-usu" name="contra-r-usu">
+                        <input type="password" class="form-control" id="contra-r-usu" name="contra-r-usu" minlength='8' maxlength='15' pattern="^[a-zA-ZñÑ0-9._-]+$" placeholder="Letras, números y guiones máximo 15 caracteres">
+                    </div>
+                    <div class="col-12">
+                        <a href="#" onclick="return mostrarContrasenas()">Mostrar/Ocultar contraseñas</a>
                     </div>
                     <div class="col-md-6">
                         <label for="estado-usu" class="form-label">Estado/Ciudad</label>
-                        <input type="text" class="form-control" id="estado-usu" name="estado-usu" value="{{ usuario.6 }}" required>
+                        <input type="text" class="form-control" id="estado-usu" name="estado-usu" value="{{ usuario.6 }}" required minlength='4' maxlength='25' placeholder="México, CDMX, etc" pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ.\s]+">
                     </div>
                     <div class="col-md-6">
                         <label for="tel-usu" class="form-label">Teléfono</label>
-                        <input type="tel" class="form-control" id="tel-usu" name="tel-usu" value="{{ usuario.9 }}" required>
+                        <input type="tel" class="form-control" id="tel-usu" name="tel-usu" value="{{ usuario.9 }}" required minlength='8' maxlength='12' pattern="[0-9]+" placeholder="55000000">
                     </div>
                     <div class="col-12">
                             <label for="conf-contra-ori" class="form-label">Para validar los cambios ingrese su contraseña actual.</label>
-                            <input type="password" class="form-control" id="conf-contra-ori" name="conf-contra-ori" required>
+                            <input type="password" class="form-control" id="conf-contra-ori" name="conf-contra-ori" required pattern="^[a-zA-ZñÑ0-9._-]+$" placeholder="Contraseña actual">
                             <input type="hidden" class="form-control" id="contra-ori" name="contra-ori" value="{{ usuario.4 }}" required>
                     </div>
                     <div class="col-12">

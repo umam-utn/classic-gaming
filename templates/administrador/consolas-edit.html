@@ -17,15 +17,19 @@
             <div  class="titulos"><h1>Administrar Consolas</h1></div>
             {% for consola in consolas %}
             <div id="formulario">
-                <div  class="titulos"><h4>Editar {{ consola.1 }}</h4></div>
+                <div  class="titulos"><h3>Editar {{ consola.1 }}</h3></div>
+                <p><i><b>Instrucciones:</b></i></p>
+                <p><i>Los campos marcados con un * son obligatorios.</i></p>
+                <p><i>El campo nombre lleva entre 4 y 25 caracteres que pueden ser: letras, números, punto o dos puntos.</i></p>
+                <p><i>El campo descripcion pue almacenar un máximo de 240 caracteres.</i></p>
                 <form class="row g-3" id="forma" action="/update_consola/{{ consola.0 }}" method="POST">
                     <div class="col-md-12">
-                      <label for="nombre-consola" class="form-label">Nombre</label>
-                      <input type="text" class="form-control" id="nombre-consola" name="nombre-consola" required value="{{ consola.1 }}">
+                      <label for="nombre-consola" class="form-label">*Nombre</label>
+                      <input type="text" class="form-control" id="nombre-consola" name="nombre-consola" required value="{{ consola.1 }}"  minlength='4' maxlength='25' placeholder="Nintendo, PlayStation, etc." pattern="[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ:.\s]+">
                     </div>
                     <div class="col-12">
                         <label for="desc-consola" class="form-label">Descripción</label>
-                        <textarea class="form-control" id="desc-consola" name="desc-consola" rows="3" maxlength ="240">{{ consola.2 }}</textarea>
+                        <textarea class="form-control" id="desc-consola" name="desc-consola" rows="3" maxlength ="240" placeholder="Descripción de la consola.">{{ consola.2 }}</textarea>
                     </div>
                     <div class="col-12">
                       <button type="submit" class="btn btn-primary btn-completo">Modificar</button>

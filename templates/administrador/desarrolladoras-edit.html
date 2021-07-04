@@ -17,15 +17,19 @@
             <div  class="titulos"><h1>Administrar Desarrolladora</h1></div>
             {% for desarrolladora in desarrolladoras %}
             <div id="formulario">
-                <div  class="titulos"><h4>Editar {{ desarrolladora.1 }}</h4></div>
+                <div  class="titulos"><h3>Editar {{ desarrolladora.1 }}</h3></div>
+                <p><i><b>Instrucciones:</b></i></p>
+                <p><i>Los campos marcados con un * son obligatorios.</i></p>
+                <p><i>El campo nombre lleva entre 3 y 25 caracteres que pueden ser: letras, números, punto o dos puntos.</i></p>
+                <p><i>El campo descripcion pue almacenar un máximo de 240 caracteres.</i></p>
                 <form class="row g-3" id="forma" action="/update_desarrolladora/{{ desarrolladora.0 }}" method="POST">
                     <div class="col-md-12">
-                      <label for="nombre-desarrolladora" class="form-label">Nombre</label>
-                      <input type="text" class="form-control" id="nombre-desarrolladora" name="nombre-desarrolladora" required value="{{ desarrolladora.1 }}">
+                      <label for="nombre-desarrolladora" class="form-label">*Nombre</label>
+                      <input type="text" class="form-control" id="nombre-desarrolladora" name="nombre-desarrolladora" required value="{{ desarrolladora.1 }}" minlength='3' maxlength='25' placeholder="Sega, SNK, Capcom, etc." pattern="[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ:.\s]+">
                     </div>
                     <div class="col-12">
                         <label for="desc-desarrolladora" class="form-label">Descripción</label>
-                        <textarea class="form-control" id="desc-desarrolladora" name="desc-desarrolladora" rows="3" maxlength ="240">{{ desarrolladora.2 }}</textarea>
+                        <textarea class="form-control" id="desc-desarrolladora" name="desc-desarrolladora" rows="3" maxlength ="240" placeholder="Descripción/Historia de la desarrolladora.">{{ desarrolladora.2 }}</textarea>
                     </div>
                     <div class="col-12">
                       <button type="submit" class="btn btn-primary btn-completo">Modificar</button>

@@ -17,15 +17,19 @@
             <div  class="titulos"><h1>Administrar Géneros</h1></div>
             {% for genero in generos %}
             <div id="formulario">
-                <div  class="titulos"><h4>Editar {{ genero.1 }}</h4></div>
+                <div  class="titulos"><h3>Editar {{ genero.1 }}</h3></div>
+                <p><i><b>Instrucciones:</b></i></p>
+                <p><i>Los campos marcados con un * son obligatorios.</i></p>
+                <p><i>El campo nombre lleva entre 3 y 25 caracteres que pueden ser: letras, punto o dos puntos.</i></p>
+                <p><i>El campo descripcion pue almacenar un máximo de 240 caracteres.</i></p>
                 <form class="row g-3" id="forma" action="/update_genero/{{ genero.0 }}" method="POST">
                     <div class="col-md-12">
-                      <label for="nombre-genero" class="form-label">Nombre</label>
-                      <input type="text" class="form-control" id="nombre-genero" name="nombre-genero" required value="{{ genero.1 }}">
+                      <label for="nombre-genero" class="form-label">*Nombre</label>
+                      <input type="text" class="form-control" id="nombre-genero" name="nombre-genero" required value="{{ genero.1 }}" minlength='3' maxlength='25' placeholder="Rol, Lucha, Deportes, etc." pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ:.\s]+">
                     </div>
                     <div class="col-12">
                         <label for="desc-genero" class="form-label">Descripción</label>
-                        <textarea class="form-control" id="desc-genero" name="desc-genero" rows="3" maxlength ="240">{{ genero.2 }}</textarea>
+                        <textarea class="form-control" id="desc-genero" name="desc-genero" rows="3" maxlength ="240" placeholder="Descripción del género.">{{ genero.2 }}</textarea>
                     </div>
                     <div class="col-12">
                       <button type="submit" class="btn btn-primary btn-completo">Modificar</button>

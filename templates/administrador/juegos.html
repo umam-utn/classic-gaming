@@ -16,80 +16,87 @@
             {% endwith %}
             <div  class="titulos"><h1>Administrar Videojuegos</h1></div>
             <div id="formulario">
-                <div  class="titulos"><h4>Agregar</h4></div>
-                <form class="row g-3" action="/add_juego" enctype="multipart/form-data" method="POST">
+                <div  class="titulos"><h3>Agregar</h3></div>
+                <p><i><b>Instrucciones:</b></i></p>
+                <p><i>Los campos marcados con un * son obligatorios.</i></p>
+                <p><i>El campo nombre lleva entre 3 y 25 caracteres que pueden ser: letras, números, punto o dos puntos.</i></p>
+                <p><i>El campo descripcion pue almacenar un máximo de 240 caracteres.</i></p>
+                <p><i>Los campos para fotografía solo admiten el formato jpg o png.</i></p>
+                <p><i>El campo año de lanzamiento solo recibe números se puede guardar en formato de 4 dígitos (1992) o de dos(92).</i></p>
+                <p><i>Stock se refiere al número de unidades disponibles del juego.</i></p>
+                <form class="row g-3" action="/add_juego" enctype="multipart/form-data" method="POST" onsubmit="return validaFotos();">
                     <div class="col-md-6">
-                      <label for="nombre-juego" class="form-label">Nombre</label>
-                      <input type="text" class="form-control" id="nombre-juego" name="nombre-juego" required>
+                      <label for="nombre-juego" class="form-label">*Nombre</label>
+                      <input type="text" class="form-control" id="nombre-juego" name="nombre-juego" required minlength='3' maxlength='25' placeholder="Pokemon, Packman, Contra, etc." pattern="[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ:.\s]+">
                     </div>
                     <div class="col-md-6">
-                        <label for="consola-juego" class="form-label">Consola</label>
+                        <label for="consola-juego" class="form-label">*Consola</label>
                         <select id="consola-juego" name="consola-juego" required class="form-select">
-                          <option selected disabled>Seleccione</option>
+                          <option selected disabled value>Seleccione</option>
                           {% for consola in consolas %}
                             <option value="{{ consola.0 }}">{{ consola.1 }}</option>
                           {% endfor %}
                         </select>
                     </div>
                     <div class="col-md-6">
-                        <label for="foto-juego" class="form-label">Fotografía 1</label>
-                        <input class="form-control" type="file" id="foto-juego" name="foto-juego" required>
+                        <label for="foto-juego" class="form-label">*Fotografía 1</label>
+                        <input class="form-control" type="file" id="foto-juego" name="foto-juego" required accept="image/png, .jpeg, .jpg">
                     </div>
                     <div class="col-md-6">
-                        <label for="fotodos-juego" class="form-label">Fotografía 2</label>
-                        <input class="form-control" type="file" id="fotodos-juego" name="fotodos-juego" required>
+                        <label for="fotodos-juego" class="form-label">**Fotografía 2</label>
+                        <input class="form-control" type="file" id="fotodos-juego" name="fotodos-juego" required accept="image/png, .jpeg, .jpg">
                     </div>
                     <div class="col-md-6">
-                        <label for="lanzamiento-juego" class="form-label">Año de Lanzamiento</label>
-                        <input type="number" class="form-control" id="lanzamiento-juego" name="lanzamiento-juego">
+                        <label for="lanzamiento-juego" class="form-label">*Año de Lanzamiento</label>
+                        <input type="text" class="form-control" id="lanzamiento-juego" name="lanzamiento-juego" minlength='2' maxlength='4' placeholder="196X, 6X" pattern="[0-9]+">
                     </div>
                     <div class="col-md-6">
-                        <label for="precio-juego" class="form-label">Precio</label>
-                        <input type="number" class="form-control" id="precio-juego" name="precio-juego" required>
+                        <label for="precio-juego" class="form-label">*Precio</label>
+                        <input type="number" class="form-control" id="precio-juego" name="precio-juego" required min="99.00" max="9999.00" placeholder="500.00">
                     </div>
                     <div class="col-12">
                         <label for="desc-juego" class="form-label">Descripción</label>
-                        <textarea class="form-control" id="desc-juego" name="desc-juego" rows="3"></textarea>
+                        <textarea class="form-control" id="desc-juego" name="desc-juego" rows="3" maxlength ="240" placeholder="Descripción del juego."></textarea>
                     </div>
                     <div class="col-md-6">
-                        <label for="desa-juego" class="form-label">Desarrolladora</label>
+                        <label for="desa-juego" class="form-label">*Desarrolladora</label>
                         <select id="desa-juego" name="desa-juego" required class="form-select">
-                          <option selected disabled>Seleccione</option>
+                          <option selected disabled value>Seleccione</option>
                           {% for desarrolladora in desarrolladoras %}
                             <option value="{{ desarrolladora.0 }}">{{ desarrolladora.1 }}</option>
                           {% endfor %}
                         </select>
                     </div>
-                    <div class="col-md-6">
-                        <label for="reg-juego" class="form-label">Región</label>
+                    <div class="col-md-12">
+                        <label for="reg-juego" class="form-label">*Región</label>
                         <select id="reg-juego" name="reg-juego" required class="form-select">
-                          <option selected disabled>Seleccione</option>
+                          <option selected disabled value>Seleccione</option>
                           {% for region in regiones %}
-                            <option value="{{ region.0 }}">{{ region.1 }}</option>
+                            <option value="{{ region.0 }}">{{ region.1 }}: {{ region.2 }}</option>
                           {% endfor %}
                         </select>
                     </div>
-                    <div class="col-md-6">
-                        <label for="genero-juego" class="form-label">Género</label>
+                    <div class="col-md-12">
+                        <label for="genero-juego" class="form-label">*Género</label>
                         <select id="genero-juego" name="genero-juego" required class="form-select">
-                          <option selected disabled>Seleccione</option>
+                          <option selected disabled value>Seleccione</option>
                           {% for genero in generos %}
-                            <option value="{{ genero.0 }}">{{ genero.1 }}</option>
+                            <option value="{{ genero.0 }}">{{ genero.1 }}: {{ genero.2 }}</option>
                           {% endfor %}
                         </select>
                     </div>
                     <div class="col-md-6">
-                        <label for="idioma-juego" class="form-label">Idioma</label>
+                        <label for="idioma-juego" class="form-label">*Idioma</label>
                         <select id="idioma-juego" name="idioma-juego" class="form-select" required>
-                          <option selected disabled>Seleccione</option>
+                          <option selected disabled value>Seleccione</option>
                           {% for idioma in idiomas %}
                             <option value="{{ idioma.0 }}">{{ idioma.1 }}</option>
                           {% endfor %}
                         </select>
                     </div>
                     <div class="col-md-6">
-                      <label for="stock-juego" class="form-label">Stock</label>
-                      <input type="number" class="form-control" id="stock-juego" name="stock-juego" required>
+                      <label for="stock-juego" class="form-label">*Stock</label>
+                      <input type="number" class="form-control" id="stock-juego" name="stock-juego" required min="1.00" step="1.00" placeholder="1.00">
                     </div>
                     <div class="col-12">
                       <button type="submit" class="btn btn-primary btn-completo">Agregar</button>
@@ -97,6 +104,14 @@
                 </form>
             </div>
             <div id="tabla-registros">
+                <nav class="navbar navbar-dark bg-primary">
+                    <div class="container-fluid">
+                        <form class="d-flex" action="/busqueda_juegos" method="POST">
+                            <input class="form-control me-2" type="search" placeholder="Nombre" aria-label="Search" id="busqueda" name="busqueda" minlength="1" maxlength="26">
+                            <button class="btn btn-light" type="submit"><i class="bi bi-search"></i></button>
+                        </form>
+                    </div>
+                </nav>
                 <table class="table table-striped">
                     <thead>
                         <tr>

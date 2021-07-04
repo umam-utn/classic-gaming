@@ -16,6 +16,14 @@
             {% endwith %}
             <div  class="titulos"><h1>Administrar Usuarios</h1></div>
             <div>
+                <nav class="navbar navbar-dark bg-primary">
+                    <div class="container-fluid">
+                        <form class="d-flex" action="/busqueda_usuarios" method="POST">
+                            <input class="form-control me-2" type="search" placeholder="Nombre" aria-label="Search" id="busqueda" name="busqueda" minlength="1" maxlength="26">
+                            <button class="btn btn-light" type="submit"><i class="bi bi-search"></i></button>
+                        </form>
+                    </div>
+                </nav>
                 <table class="table table-striped">
                     <thead>
                         <tr>
