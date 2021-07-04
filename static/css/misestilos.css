@@ -211,6 +211,12 @@ input:invalid {
     display: block;
     margin: 1rem auto;
 }
+.actual{
+    width: 100%;
+    position: relative;
+    display: block;
+    margin: 1rem auto;
+}
 @media (max-width: 720px) {
     main > div {
         display: block;
