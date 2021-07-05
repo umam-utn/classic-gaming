@@ -217,6 +217,9 @@ input:invalid {
     display: block;
     margin: 1rem auto;
 }
+.card-catalogo{
+    width: 45%;
+}
 @media (max-width: 720px) {
     main > div {
         display: block;
@@ -259,5 +262,9 @@ input:invalid {
     .seccionpie {
         width: 94%;
         text-align: center;
+    }
+    .card-catalogo{
+        width: 100%;
+        margin: auto;
     }
 }
